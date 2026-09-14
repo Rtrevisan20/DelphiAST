@@ -89,3 +89,23 @@ Copyright (c) 2014-2020 Roman Yankovsky (roman@yankovsky.me) et al
 DelphiAST is released under the Mozilla Public License, v. 2.0
 
 See LICENSE for details.
+
+#### Building (Delphi 13 + Lazarus 4.8)
+
+This fork supports **dual IDE** development: **Delphi 13 (VER370)** and **Lazarus 4.8 (FPC 3.2.2+)**. All `Generics.Collections` usage relies on the platform-native implementation (`rtl-generics` in FPC), so there are no submodules to fetch.
+
+##### Lazarus / FPC
+
+The package `DelphiASTCore.lpk` compiles the core units plus `StringBuilderUnit`. Build it and the demo/test projects with `lazbuild`:
+
+```bat
+"C:\lazarus\lazbuild.exe" DelphiASTCore.lpk
+"C:\lazarus\lazbuild.exe" Demo\Parser\ParserDemo.lpi
+"C:\lazarus\lazbuild.exe" Test\DelphiASTTest.lpi
+```
+
+Alternatively, open `DelphiAST.lpk` (renamed `DelphiASTCore.lpk`) in the Lazarus IDE and click *Compile* — the package name `DelphiASTCore` avoids a name clash between the generated package unit and the real `DelphiAST.pas` core unit.
+
+##### Delphi 13 (VER370)
+
+Add the `Source`, `Source\SimpleParser`, `Source\FreePascalSupport` and `Source\FreePascalSupport\FPC_StringBuilder\Src` folders to the project search/library path. The `{$IFDEF FPC}` blocks (anonymous functions, `IOUtils`, etc.) are auto-excluded in Delphi.

@@ -54,7 +54,11 @@ unit SimpleParser.Lexer;
 interface
 
 uses
+  {$IFDEF FPC}
   SysUtils, Classes, Character,
+  {$ELSE}
+  System.SysUtils, System.Classes, System.Character,
+  {$ENDIF}
   {$IFDEF FPC}
     Generics.Collections,
   {$ENDIF}
@@ -393,7 +397,11 @@ type
 implementation
 
 uses
+  {$IFDEF FPC}
   StrUtils;
+  {$ELSE}
+  System.StrUtils;
+  {$ENDIF}
 
 type
   TmwPasLexExpressionEvaluation = (leeNone, leeAnd, leeOr);
@@ -472,6 +480,7 @@ function TmwBasePasLex.GetPosXY: TTokenPoint;
 begin
   Result.Y := FTokenLine + 1;
   Result.X := FTokenPos - FTokenLinePos + 1;
+  Result.LineSeq := FLineSeq;
 end;
 
 function TmwBasePasLex.GetRunPos: Integer;

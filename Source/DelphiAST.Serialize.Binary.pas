@@ -5,8 +5,13 @@
 interface
 
 uses
+  {$IFDEF FPC}
   Classes,
   Generics.Collections,
+  {$ELSE}
+  System.Classes,
+  System.Generics.Collections,
+  {$ENDIF}
   DelphiAST.Consts,
   DelphiAST.Classes;
 
@@ -36,7 +41,11 @@ type
 implementation
 
 uses
-  SysUtils;
+  {$IFDEF FPC}
+  SysUtils
+  {$ELSE}
+  System.SysUtils
+  {$ENDIF};
 
 var
   CSignature: AnsiString = 'DAST binary file'#26;
@@ -208,7 +217,7 @@ begin
     if len > 0 then
       if cardinal(FStream.Read(u8[1], len)) <> len then
         Exit;
-    str := UTF8ToUnicodeString(u8);
+    str := UnicodeString(u8);
     if Length(Str) > 4 then
       FStringList.Add(str);
   end;

@@ -5,9 +5,13 @@ unit DelphiAST.ProjectIndexer;
 interface
 
 uses
-  Classes, Generics.Defaults, Generics.Collections,
+  {$IFDEF FPC}
+  Classes, Generics.Defaults, Generics.Collections, IOUtils,
+  {$ELSE}
+  System.Classes, System.Generics.Defaults, System.Generics.Collections, System.IOUtils,
+  {$ENDIF}
   SimpleParser.Lexer.Types,
-  DelphiAST, DelphiAST.Classes, DelphiAST.Consts;
+  DelphiAST.Classes, DelphiAST.Consts;
 
 type
   TProjectIndexer = class
@@ -72,9 +76,9 @@ type
   strict private type
     TIncludeHandler = class(TInterfacedObject, IIncludeHandler)
     strict private
-      [weak] FIncludeCache: TIncludeCache;
-      [weak] FIndexer     : TProjectIndexer;
-      [weak] FProblems    : TProblems;
+      FIncludeCache: TIncludeCache;
+      FIndexer     : TProjectIndexer;
+      FProblems    : TProblems;
       FUnitFile           : string;
       FUnitFileFolder     : string;
     public
@@ -138,13 +142,24 @@ type
 implementation
 
 uses
+  {$IFDEF FPC}
   SysUtils,
-  SimpleParser;
+  {$ELSE}
+  System.SysUtils,
+  {$ENDIF}
+  SimpleParser,
+  DelphiAST;
 
 { TProjectIndexer.TParsedUnits }
 
 procedure TProjectIndexer.TParsedUnits.Initialize(parsedUnits: TParsedUnitsCache;
   unitPaths: TUnitPathsCache);
+{$IFDEF FPC}
+  function CompareUnitInfo(const Left, Right: TUnitInfo): integer;
+  begin
+    Result := TOrdinalIStringComparer(TIStringComparer.Ordinal).Compare(Left.Name, Right.Name);
+  end;
+{$ENDIF}
 var
   info    : TUnitInfo;
   kv      : TPair<string,TSyntaxNode>;
@@ -168,17 +183,28 @@ begin
   end;
 
   TrimExcess;
+{$IFDEF FPC}
+  Sort(
+    TComparer<TUnitInfo>.Construct(@CompareUnitInfo));
+{$ELSE}
   Sort(
     TComparer<TUnitInfo>.Construct(
       function(const Left, Right: TUnitInfo): integer
       begin
         Result := TOrdinalIStringComparer(TIStringComparer.Ordinal).Compare(Left.Name, Right.Name);
       end));
+{$ENDIF}
 end;
 
 { TProjectIndexer.TIncludeFiles }
 
 procedure TProjectIndexer.TIncludeFiles.Initialize(includeCache: TIncludeCache);
+{$IFDEF FPC}
+  function CompareIncludeFileInfo(const Left, Right: TIncludeFileInfo): integer;
+  begin
+    Result := TOrdinalIStringComparer(TIStringComparer.Ordinal).Compare(Left.Name, Right.Name);
+  end;
+{$ENDIF}
 var
   info: TIncludeFileInfo;
   kv  : TPair<string,TIncludeInfo>;
@@ -198,12 +224,17 @@ begin
   end;
 
   TrimExcess;
+{$IFDEF FPC}
+  Sort(
+    TComparer<TIncludeFileInfo>.Construct(@CompareIncludeFileInfo));
+{$ELSE}
   Sort(
     TComparer<TIncludeFileInfo>.Construct(
       function(const Left, Right: TIncludeFileInfo): integer
       begin
         Result := TOrdinalIStringComparer(TIStringComparer.Ordinal).Compare(Left.Name, Right.Name);
       end));
+{$ENDIF}
 end;
 
 { TProjectIndexer.TProblems }

@@ -11,7 +11,7 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="ParserDemo"/>
+      <Title Value="DelphiASTTestLazarus"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -32,52 +32,26 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="1">
-      <Item1>
-        <PackageName Value="LCL"/>
-      </Item1>
-    </RequiredPackages>
-    <Units Count="4">
+    <RequiredPackages Count="0"/>
+    <Units Count="1">
       <Unit0>
-        <Filename Value="ParserDemo.lpr"/>
+        <Filename Value="DelphiASTTestLazarus.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
-      <Unit1>
-        <Filename Value="uMainForm.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="MainForm"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit1>
-      <Unit2>
-        <Filename Value="..\..\Source\DelphiAST.Classes.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="..\..\Source\DelphiAST.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <SearchPaths>
-      <IncludeFiles Value="..\..\Source;..\..\Source\SimpleParser;$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\Source;..\..\Source\FreePascalSupport\FPC_StringBuilder\Src;..\..\Source\FreePascalSupport;..\..\Source\SimpleParser"/>
+      <IncludeFiles Value="..\..\Source;..\..\Source\SimpleParser;..\..\Source\FreePascalSupport;$(ProjOutDir)"/>
+      <OtherUnitFiles Value="..\..\Source;..\..\Source\SimpleParser;..\..\Source\FreePascalSupport;..\..\Source\FreePascalSupport\FPC_StringBuilder\Src"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
         <SyntaxMode Value="Delphi"/>
       </SyntaxOptions>
     </Parsing>
-    <Linking>
-      <Options>
-        <Win32>
-          <GraphicApplication Value="True"/>
-        </Win32>
-      </Options>
-    </Linking>
     <Other>
       <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
     </Other>

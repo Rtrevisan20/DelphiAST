@@ -39,9 +39,18 @@ var
 implementation
 
 uses
-  FileCtrl, IOUtils, DelphiAST, DelphiAST.Classes;
+  {$IFDEF FPC}
+    Dialogs, FileCtrl, IOUtils, FileUtil,
+  {$ELSE}
+    FileCtrl, IOUtils,
+  {$ENDIF}
+  DelphiAST, DelphiAST.Classes;
 
+{$IFDEF FPC}
+{$R *.lfm}
+{$ELSE}
 {$R *.dfm}
+{$ENDIF}
 
 procedure TForm2.btnRunClick(Sender: TObject);
 var
@@ -54,7 +63,11 @@ begin
   if not SelectDirectory('Select Folder', '', Path) then
     Exit;
 
+  {$IFDEF FPC}
+  for FileName in FindAllFiles(Path, '*.pas', True) do
+  {$ELSE}
   for FileName in TDirectory.GetFiles(Path, '*.pas', TSearchOption.soAllDirectories) do
+  {$ENDIF}
   begin
     try
       SyntaxTree := TPasSyntaxTreeBuilder.Run(FileName, False, TIncludeHandler.Create(Path));

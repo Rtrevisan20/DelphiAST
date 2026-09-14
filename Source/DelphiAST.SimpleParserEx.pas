@@ -3,8 +3,13 @@ unit DelphiAST.SimpleParserEx;
 interface
 
 uses
-  SysUtils, Generics.Collections, SimpleParser, SimpleParser.Lexer.Types,
-  SimpleParser.Lexer, Classes;
+  {$IFDEF FPC}
+  SysUtils, Generics.Collections, Classes,
+  {$ELSE}
+  System.SysUtils, System.Generics.Collections, System.Classes,
+  {$ENDIF}
+  SimpleParser, SimpleParser.Lexer.Types,
+  SimpleParser.Lexer;
 
 type
   TStringEvent = procedure(var s: string) of object;

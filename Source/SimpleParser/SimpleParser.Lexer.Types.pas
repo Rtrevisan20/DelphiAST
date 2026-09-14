@@ -22,8 +22,11 @@ unit SimpleParser.Lexer.Types;
 interface
 
 uses
-  SysUtils,
-  TypInfo;
+  {$IFDEF FPC}
+  SysUtils, TypInfo
+  {$ELSE}
+  System.SysUtils, System.TypInfo
+  {$ENDIF};
 
 {$INCLUDE SimpleParser.inc}
 

@@ -5,7 +5,12 @@ unit DelphiAST;
 interface
 
 uses
-  SysUtils, Classes, Generics.Collections, SimpleParser, SimpleParser.Lexer,
+  {$IFDEF FPC}
+  SysUtils, Classes, Generics.Collections,
+  {$ELSE}
+  System.SysUtils, System.Classes, System.Generics.Collections,
+  {$ENDIF}
+  SimpleParser, SimpleParser.Lexer,
   SimpleParser.Lexer.Types, DelphiAST.Classes, DelphiAST.Consts, DelphiAST.SimpleParserEx;
 
 type
@@ -259,7 +264,11 @@ type
 implementation
 
 uses
-  TypInfo;
+  {$IFDEF FPC}
+  TypInfo
+  {$ELSE}
+  System.TypInfo
+  {$ENDIF};
 
 {$IFDEF FPC}
   type

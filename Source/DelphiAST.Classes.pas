@@ -5,7 +5,12 @@ unit DelphiAST.Classes;
 interface
 
 uses
-  SysUtils, Generics.Collections, SimpleParser.Lexer.Types, DelphiAST.Consts;
+  {$IFDEF FPC}
+  SysUtils, Generics.Collections,
+  {$ELSE}
+  System.SysUtils, System.Generics.Collections,
+  {$ENDIF}
+  SimpleParser.Lexer.Types, DelphiAST.Consts;
 
 type
   EParserException = class(Exception)
@@ -60,7 +65,7 @@ type
     // ntUnknown in the TypesPath parameter means a node of any type.
     // For example, for the branch presented below as XML
     // FindNode([ntAbsolute, ntValue, ntExpression, ntIdentifier]),
-    // FindNode([ntAbsolute, ntUnknown, ntExpression, ntIdentifier]) è
+    // FindNode([ntAbsolute, ntUnknown, ntExpression, ntIdentifier]) ï¿½
     // FindNode([ntAbsolute, ntUnknown, ntUnknown, ntIdentifier])
     // return the IDENTIFIER node.
     // <VARIABLE line="9" col="3">

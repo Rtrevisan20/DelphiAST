@@ -4,10 +4,12 @@ interface
 
 uses
   {$IFDEF FPC}
-     StringBuilderUnit,
+    StringBuilderUnit,
+    Classes, SysUtils,
+  {$ELSE}
+    System.Classes, System.SysUtils,
   {$ENDIF}
-  Classes,
-  DelphiAST.Classes, SysUtils;
+  DelphiAST.Classes;
 
 type
   TSyntaxTreeWriter = class
@@ -26,7 +28,11 @@ type
 implementation
 
 uses
+  {$IFDEF FPC}
   Generics.Collections,
+  {$ELSE}
+  System.Generics.Collections,
+  {$ENDIF}
   {$IFNDEF FPC}
     DelphiAST.Serialize.Binary,
   {$ENDIF}

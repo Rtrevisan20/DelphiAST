@@ -146,8 +146,11 @@ unit SimpleParser;
 interface
 
 uses
-  SysUtils,
-  Classes,
+  {$IFDEF FPC}
+  SysUtils, Classes,
+  {$ELSE}
+  System.SysUtils, System.Classes,
+  {$ENDIF}
   SimpleParser.Lexer.Types,
   SimpleParser.Lexer,
   SimpleParser.Types;
@@ -695,8 +698,7 @@ var
   Bytes: TBytes;
 begin
   Encoding := nil;
-  SetLength(Bytes, Self.Size);
-  Bytes := BytesOf(DataString);
+  Bytes := Self.Bytes;
   TEncoding.GetBufferEncoding(Bytes, Encoding);
   Result := Encoding.GetString(Bytes, Length(Encoding.GetPreamble), Size);
 {$ENDIF}
